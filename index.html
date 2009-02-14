@@ -1,82 +1,465 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8">
+        <title>Python &middot; OAuth Documentation</title>
+        <meta name="keywords" content="oauth, python, library, signature, signing, validating, hmac, sha, sha1, rsa, plaintext, generating signatures, validating signatures">
+        <meta name="description" content="A Python OAuth library.">
 
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-<head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/combo?3.0.0pr2/build/cssfonts/fonts-min.css&3.0.0pr2/build/cssreset/reset-min.css&3.0.0pr2/build/cssgrids/grids-min.css&3.0.0pr2/build/cssbase/base-min.css">
+        <style type="text/css">
+            /* Pygments */
+            .hll{background-color:#ffc;}.c{color:#408090;font-style:italic;}.err{border:1px solid #F00;}.k{color:#007020;font-weight:bold;}.o{color:#666;}.cm{color:#408090;font-style:italic;}.cp{color:#007020;}.c1{color:#408090;font-style:italic;}.cs{color:#408090;background-color:#fff0f0;}.gd{color:#A00000;}.ge{font-style:italic;}.gr{color:#F00;}.gh{color:#000080;font-weight:bold;}.gi{color:#00A000;}.go{color:#303030;}.gp{color:#c65d09;font-weight:bold;}.gs{font-weight:bold;}.gu{color:#800080;font-weight:bold;}.gt{color:#0040D0;}.kc{color:#007020;font-weight:bold;}.kd{color:#007020;font-weight:bold;}.kn{color:#007020;font-weight:bold;}.kp{color:#007020;}.kr{color:#007020;font-weight:bold;}.kt{color:#902000;}.m{color:#208050;}.s{color:#4070a0;}.na{color:#4070a0;}.nb{color:#007020;}.nc{color:#0e84b5;font-weight:bold;}.no{color:#60add5;}.nd{color:#555;font-weight:bold;}.ni{color:#d55537;font-weight:bold;}.ne{color:#007020;}.nf{color:#06287e;}.nl{color:#002070;font-weight:bold;}.nn{color:#0e84b5;font-weight:bold;}.nt{color:#062873;font-weight:bold;}.nv{color:#bb60d5;}.ow{color:#007020;font-weight:bold;}.w{color:#bbb;}.mf{color:#208050;}.mh{color:#208050;}.mi{color:#208050;}.mo{color:#208050;}.sb{color:#4070a0;}.sc{color:#4070a0;}.sd{color:#4070a0;font-style:italic;}.s2{color:#4070a0;}.se{color:#4070a0;font-weight:bold;}.sh{color:#4070a0;}.si{color:#70a0d0;font-style:italic;}.sx{color:#c65d09;}.sr{color:#235388;}.s1{color:#4070a0;}.ss{color:#517918;}.bp{color:#007020;}.vc{color:#bb60d5;}.vg{color:#bb60d5;}.vi{color:#bb60d5;}.il{color:#208050;}
 
-	<title>nshah/python-oauth @ GitHub</title>
-	
-	<style type="text/css">
-		body {
-  		margin-top: 1.0em;
-  		background-color: #ad717d;
-		  font-family: "helvetica"; 
-  		color: #000000;
-    }
-    #container {
-      margin: 0 auto;
-      width: 700px;
-    }
-		h1 { font-size: 3.8em; color: #528e82; margin-bottom: 3px; }
-		h1 .small { font-size: 0.4em; }
-		h1 a { text-decoration: none }
-		h2 { font-size: 1.5em; color: #528e82; }
-    h3 { text-align: center; color: #528e82; }
-    a { color: #528e82; }
-    .description { font-size: 1.2em; margin-bottom: 30px; margin-top: 30px; font-style: italic;}
-    .download { float: right; }
-		pre { background: #000; color: #fff; padding: 15px;}
-    hr { border: 0; width: 80%; border-bottom: 1px solid #aaa}
-    .footer { text-align:center; padding-top:30px; font-style: italic; }
-	</style>
-	
-</head>
-
-<body>
-  <a href="http://github.com/nshah/python-oauth"><img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub" /></a>
+            #document {
+                font-family: serif;
+                line-height: 1.3;
+            }
+            #document h1 {
+                font-size: 182%;
+                text-transform: uppercase;
+            }
+            #document a.headerlink {
+                color: #B4B4B4 !important;
+                padding-left: 4px;
+                visibility: hidden;
+                text-decoration: none;
+            }
+            #document a.headerlink:hover {
+                background-color: #B4B4B4;
+                color: #F0F0F0 !important;
+            }
+            #document h1:hover > a.headerlink,
+            #document h2:hover > a.headerlink,
+            #document h3:hover > a.headerlink,
+            #document h4:hover > a.headerlink,
+            #document h5:hover > a.headerlink,
+            #document h6:hover > a.headerlink,
+            #document dt:hover > a.headerlink {
+                visibility: visible;
+            }
+            #document dt:target,
+            #document .highlight {
+                background-color: #fbe54e;
+            }
+            #document pre {
+                padding: 5px;
+                background-color: #efc;
+                color: #333;
+                border: 1px solid #ac9;
+                border-left: none;
+                border-right: none;
+                overflow: auto;
+            }
+            #document tt.descname {
+                font-weight: bold;
+                color: #468966;
+            }
+            #document dd {
+                margin-top: 3px;
+            }
+            #document cite {
+                font-weight: bold;
+                font-family: monospace;
+                color: #B64926;
+            }
+            #document .section .section {
+                margin-top: 3em;
+                border-top: 1px dashed #aaa;
+            }
+            #document > .section > .section > dl {
+                margin-left: 0;
+                margin-right: 0;
+                padding: 0.5em 1em;
+            }
+            #document .class {
+                background-color: #ffd9d2;
+            }
+            #document .method,
+            #document .attribute {
+                background-color: #E6EDFA;
+            }
+            #document .method,
+            #document .attribute {
+                margin-top: 0;
+                margin-bottom: 0;
+                padding: 1em;
+                border-top: 1px solid #aaa;
+                border-bottom: 1px solid #666;
+            }
+            #document .function {
+                background-color: #E2DCFD;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="document" class="yui-d2">
+        
   
-  <div id="container">
+  <div class="section" id="oauth">
+<h1>oauth<a class="headerlink" href="#oauth" title="Permalink to this headline">¶</a></h1>
+<p>A <a class="reference external" href="http://python.org/">python</a> implementation of the signature logic
+associated with the <a class="reference external" href="http://oauth.net/core/1.0/">OAuth 1.0</a> protocol. It is
+not designed to handle the entire OAuth flow, and blissfully ignores the nonce.
+Use it for generating and validating signatures.</p>
+<p>The code is hosted
+<a class="reference external" href="https://github.com/nshah/python-oauth/tree/master">here at github</a>.
+The latest code can be downloaded as a
+<a class="reference external" href="http://github.com/nshah/python-oauth/zipball/master">zip file</a> or a
+<a class="reference external" href="http://github.com/nshah/python-oauth/tarball/master">tarball</a>.</p>
+<p>Requires Python 2.5 or newer.</p>
+<div class="section" id="oauthrequest">
+<h2>OAuthRequest<a class="headerlink" href="#oauthrequest" title="Permalink to this headline">¶</a></h2>
+<p>This is the primary interface into the library.</p>
+<dl class="class">
+<dt id="oauth.OAuthRequest">
+<!--[oauth.OAuthRequest]-->class <tt class="descclassname">oauth.</tt><tt class="descname">OAuthRequest</tt><big>(</big><em>url</em>, <em>http_method='GET'</em>, <em>params=None</em>, <em>headers={}</em>, <em>version='1.0'</em>, <em>timestamp_threshold=300</em>, <em>nonce_length=10</em><big>)</big><a class="headerlink" href="#oauth.OAuthRequest" title="Permalink to this definition">¶</a></dt>
+<dd><p>Represents outgoing or incoming requests. Provides the ability to sign
+outgoing requests (<a class="reference external" href="#oauth.OAuthRequest.sign_request">sign_request</a>), and
+validate incoming signed requests (<a class="reference external" href="#oauth.OAuthRequest.validate_signature">validate_signature</a>).</p>
+<p>Arguments:</p>
+<blockquote>
+<dl class="docutils">
+<dt><cite>url</cite></dt>
+<dd>The URL. Query parameters in the URL will automatically be parsed
+out. <strong>Required</strong>.</dd>
+<dt><cite>http_method</cite></dt>
+<dd>The HTTP method for the request.</dd>
+<dt><cite>params</cite></dt>
+<dd>A dict or string body of request parameters.</dd>
+<dt><cite>headers</cite></dt>
+<dd>A dict which may contain the <em>Authorization</em> header.</dd>
+<dt><cite>version</cite></dt>
+<dd>The <em>oauth_version</em>.</dd>
+<dt><cite>timestamp_threshold</cite></dt>
+<dd>The number of seconds a received timestamp can be off by.</dd>
+<dt><cite>nonce_length</cite></dt>
+<dd>The length of the randomly generated nonce.</dd>
+</dl>
+</blockquote>
+<dl class="method">
+<dt id="oauth.OAuthRequest.validate_signature">
+<!--[oauth.OAuthRequest.validate_signature]--><tt class="descname">validate_signature</tt><big>(</big><em>signature_method</em>, <em>consumer</em>, <em>token=None</em><big>)</big><a class="headerlink" href="#oauth.OAuthRequest.validate_signature" title="Permalink to this definition">¶</a></dt>
+<dd><p>Validates an <em>existing</em> signature in the request. It does not return a
+value, and will throw an OAuthError exception when it fails.</p>
+<dl class="docutils">
+<dt><strong>BE WARNED</strong>: Nonce validation is left to the user.</dt>
+<dd><a class="reference external" href="http://oauth.net/core/1.0/#nonce">http://oauth.net/core/1.0/#nonce</a></dd>
+</dl>
+<p>Arguments:</p>
+<dl class="docutils">
+<dt><cite>signature_method</cite></dt>
+<dd>The class used to handle Signature logic. This should be a concrete
+implementation of <a class="reference external" href="#oauth.signature_method.base.OAuthSignatureMethod">OAuthSignatureMethod</a>.</dd>
+<dt><cite>consumer</cite></dt>
+<dd>A dict containing the oauth_token and oauth_token_secret
+representing a OAuth Consumer.</dd>
+<dt><cite>token</cite></dt>
+<dd>An optional dict containing the oauth_token and oauth_token_secret
+representing a OAuth Token to be used in validating the signature.</dd>
+</dl>
+<p>This is the basic usage flow for validating signatures:</p>
+<blockquote>
+<ol class="arabic simple">
+<li>Create a Request object</li>
+<li>Create a dict with the OAuth Consumer information</li>
+<li><em>Optionally</em> create a dict with the OAuth Token information</li>
+<li>Call validate_signature with the Signature Implementation, Consumer
+and optional Token and catch OAuthError exceptions.</li>
+</ol>
+</blockquote>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">oauth</span> <span class="kn">import</span> <span class="n">OAuthRequest</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">oauth.signature_method.plaintext</span> <span class="kn">import</span> <span class="n">OAuthSignatureMethod_PLAINTEXT</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">time</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+<span class="go">        &#39;oauth_nonce&#39;: &#39;9747278682&#39;,</span>
+<span class="go">        &#39;oauth_timestamp&#39;: str(int(time.time())),</span>
+<span class="go">        &#39;oauth_consumer_key&#39;: &#39;my-ck&#39;,</span>
+<span class="go">        &#39;oauth_signature_method&#39;: &#39;PLAINTEXT&#39;,</span>
+<span class="go">        &#39;oauth_version&#39;: &#39;1.0&#39;,</span>
+<span class="go">        &#39;oauth_signature&#39;: &#39;my-cks%26&#39;,</span>
+<span class="go">    }</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">consumer</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;oauth_token&#39;</span><span class="p">:</span> <span class="s">&#39;my-ck&#39;</span><span class="p">,</span> <span class="s">&#39;oauth_token_secret&#39;</span><span class="p">:</span> <span class="s">&#39;my-cks&#39;</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">request</span> <span class="o">=</span> <span class="n">OAuthRequest</span><span class="p">(</span><span class="s">&#39;https://example.org/get-request-token&#39;</span><span class="p">,</span> <span class="s">&#39;GET&#39;</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">request</span><span class="o">.</span><span class="n">validate_signature</span><span class="p">(</span><span class="n">OAuthSignatureMethod_PLAINTEXT</span><span class="p">,</span> <span class="n">consumer</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
 
-    <div class="download">
-      <a href="http://github.com/nshah/python-oauth/zipball/master">
-        <img border="0" width="90" src="http://github.com/images/modules/download/zip.png"></a>
-      <a href="http://github.com/nshah/python-oauth/tarball/master">
-        <img border="0" width="90" src="http://github.com/images/modules/download/tar.png"></a>
-    </div>
-      
-    <h1><a href="http://github.com/nshah/python-oauth">python-oauth</a> 
-      <span class="small">by <a href="http://github.com/nshah">nshah</a></small></h1>
+<dl class="method">
+<dt id="oauth.OAuthRequest.sign_request">
+<!--[oauth.OAuthRequest.sign_request]--><tt class="descname">sign_request</tt><big>(</big><em>signature_method</em>, <em>consumer</em>, <em>token=None</em><big>)</big><a class="headerlink" href="#oauth.OAuthRequest.sign_request" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate a <em>new</em> signature adding/replacing a number of <a class="reference internal" href="#oauth">oauth</a>
+parameters as part of the process. Use this when you are making
+outbound signed requests.</p>
+<p>Arguments:</p>
+<dl class="docutils">
+<dt><cite>signature_method</cite></dt>
+<dd>The class used to handle Signature logic. This should be a concrete
+implementation of <a class="reference external" href="#oauth.signature_method.base.OAuthSignatureMethod">OAuthSignatureMethod</a>.</dd>
+<dt><cite>consumer</cite></dt>
+<dd>A dict containing the oauth_token and oauth_token_secret
+representing a OAuth Consumer.</dd>
+<dt><cite>token</cite></dt>
+<dd>An optional dict containing the oauth_token and oauth_token_secret
+representing a OAuth Token to be used in signing the request.</dd>
+</dl>
+<p>This is the basic usage flow for generating signatures:</p>
+<blockquote>
+<ol class="arabic simple">
+<li>Create a Request object</li>
+<li>Create a dict with the OAuth Consumer information</li>
+<li><em>Optionally</em> create a dict with the OAuth Token information</li>
+<li>Call sign_request with the Signature Implementation, Consumer and
+optional Token.</li>
+</ol>
+</blockquote>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">oauth</span> <span class="kn">import</span> <span class="n">OAuthRequest</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">oauth.signature_method.hmac_sha1</span> <span class="kn">import</span> <span class="n">OAuthSignatureMethod_HMAC_SHA1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">consumer</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;oauth_token&#39;</span><span class="p">:</span> <span class="s">&#39;my-ck&#39;</span><span class="p">,</span> <span class="s">&#39;oauth_token_secret&#39;</span><span class="p">:</span> <span class="s">&#39;my-cks&#39;</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">request</span> <span class="o">=</span> <span class="n">OAuthRequest</span><span class="p">(</span><span class="s">&#39;http://example.org/get-request-token&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">request</span><span class="o">.</span><span class="n">sign_request</span><span class="p">(</span><span class="n">OAuthSignatureMethod_HMAC_SHA1</span><span class="p">,</span> <span class="n">consumer</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">header</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">to_header</span><span class="p">()</span>
+</pre></div>
+</div>
+<p><em>header</em> will now contain the string that can be used as the
+<em>Authorization</em> header for this request.</p>
+</dd></dl>
 
-    <div class="description">
-      Python OAuth library
-    </div>
+<dl class="method">
+<dt id="oauth.OAuthRequest.to_header">
+<!--[oauth.OAuthRequest.to_header]--><tt class="descname">to_header</tt><big>(</big><em>realm=None</em><big>)</big><a class="headerlink" href="#oauth.OAuthRequest.to_header" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates the Authorization header with the current OAuth parameters.</p>
+<p><a class="reference external" href="http://oauth.net/core/1.0/#auth_header">http://oauth.net/core/1.0/#auth_header</a></p>
+<p>Arguments:</p>
+<dl class="docutils">
+<dt><cite>realm</cite></dt>
+<dd>An optional string to use as as the realm. If missing, realm will
+be ommitted all together.</dd>
+</dl>
+</dd></dl>
 
-    <p>A python implementation of the signature logic associated with the OAuth 1.0 protocol. It is not designed to handle the entire OAuth flow, and blissfully ignores the nonce. Use it for generating and validating signatures.</p><h2>Dependencies</h2>
-<p>Optional: tlslite - if RSA-SHA1 support is required.</p>
-<h2>Authors</h2>
-<p>Naitik Shah (naitik.shah@yahoo.com)<br/><br/>      </p>
-<h2>Contact</h2>
-<p>Naitik Shah (naitik.shah@yahoo.com)<br/>      </p>
+<dl class="method">
+<dt id="oauth.OAuthRequest.to_url">
+<!--[oauth.OAuthRequest.to_url]--><tt class="descname">to_url</tt><big>(</big><em>include_oauth=False</em><big>)</big><a class="headerlink" href="#oauth.OAuthRequest.to_url" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates a URL suitable for a GET request.</p>
+<p>Arguments:</p>
+<dl class="docutils">
+<dt><cite>include_oauth</cite></dt>
+<dd>Decides if <em>oauth_</em> parameters are included. This is useful if the
+OAuth parameters are being sent via the query string in the URL
+instead of the Authorization header.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="oauth.OAuthRequest.to_postdata">
+<!--[oauth.OAuthRequest.to_postdata]--><tt class="descname">to_postdata</tt><big>(</big><em>include_oauth=False</em><big>)</big><a class="headerlink" href="#oauth.OAuthRequest.to_postdata" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates the POST body.</p>
+<p>Arguments:</p>
+<dl class="docutils">
+<dt><cite>include_oauth</cite></dt>
+<dd>Decides if <em>oauth_</em> parameters are included. This is useful if the
+OAuth parameters are being sent via the POST body instead of the
+Authorization header.</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="signature-methods">
+<h2>Signature Methods<a class="headerlink" href="#signature-methods" title="Permalink to this headline">¶</a></h2>
+<p>This library supports the three types of <a class="reference external" href="http://oauth.net/core/1.0/#signing_process">signature methods</a> defined in the OAuth
+specification. If you intend to use RSA-SHA1 signatures, you will also need to
+make sure you have the <a class="reference external" href="http://www.trevp.net/tlslite/">tlslite</a> module
+available.</p>
+<p>If you are using the PLAINTEXT or HMAC-SHA1 signature methods, then all you
+need to do is use the provided implementations. But the RSA-SHA1 implementation
+requires you to create a concrete implementation by inheriting from
+OAuthSignatureMethod_RSA_SHA1 and provide a <em>public_cert</em> and a <em>private_cert</em>,
+and use your class as the signature_method for signing and validating
+requests.</p>
+<dl class="class">
+<dt id="oauth.signature_method.base.OAuthSignatureMethod">
+<!--[oauth.signature_method.base.OAuthSignatureMethod]-->class <tt class="descclassname">oauth.signature_method.base.</tt><tt class="descname">OAuthSignatureMethod</tt><big>(</big><em>request</em>, <em>consumer</em>, <em>token</em><big>)</big><a class="headerlink" href="#oauth.signature_method.base.OAuthSignatureMethod" title="Permalink to this definition">¶</a></dt>
+<dd><p>The base signature method class. An implementation needs to provide a name
+and a signature. The default validate_signature compares a newly generated
+signature.</p>
+<p><a class="reference external" href="http://oauth.net/core/1.0/#signing_process">http://oauth.net/core/1.0/#signing_process</a></p>
+<p>Arguments:</p>
+<blockquote>
+<dl class="docutils">
+<dt><cite>request</cite></dt>
+<dd>An instance of an OAuthRequest object.</dd>
+<dt><cite>consumer</cite></dt>
+<dd>A dict containing the oauth_token and oauth_token_secret
+representing a OAuth Consumer.</dd>
+<dt><cite>token</cite></dt>
+<dd>An optional dict containing the oauth_token and oauth_token_secret
+representing a OAuth Token to be used in signing the request.</dd>
+</dl>
+</blockquote>
+<dl class="attribute">
+<dt id="oauth.signature_method.base.OAuthSignatureMethod.base_secrets">
+<!--[oauth.signature_method.base.OAuthSignatureMethod.base_secrets]--><tt class="descname">base_secrets</tt><a class="headerlink" href="#oauth.signature_method.base.OAuthSignatureMethod.base_secrets" title="Permalink to this definition">¶</a></dt>
+<dd>Returns the concatenated encoded values of the Consumer Secret and
+Token Secret, separated by a ‘&amp;’ character (ASCII code 38), even if
+either secret is empty.</dd></dl>
+
+<dl class="attribute">
+<dt id="oauth.signature_method.base.OAuthSignatureMethod.base_string">
+<!--[oauth.signature_method.base.OAuthSignatureMethod.base_string]--><tt class="descname">base_string</tt><a class="headerlink" href="#oauth.signature_method.base.OAuthSignatureMethod.base_string" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates the Signature Base String.</p>
+<p><a class="reference external" href="http://oauth.net/core/1.0/#rfc.section.A.5.1">http://oauth.net/core/1.0/#rfc.section.A.5.1</a></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="oauth.signature_method.base.OAuthSignatureMethod.name">
+<!--[oauth.signature_method.base.OAuthSignatureMethod.name]--><tt class="descname">name</tt><a class="headerlink" href="#oauth.signature_method.base.OAuthSignatureMethod.name" title="Permalink to this definition">¶</a></dt>
+<dd>An implementation should provide an attribute called name for use as
+the <em>oauth_signature_method</em> value.</dd></dl>
+
+<dl class="attribute">
+<dt id="oauth.signature_method.base.OAuthSignatureMethod.signature">
+<!--[oauth.signature_method.base.OAuthSignatureMethod.signature]--><tt class="descname">signature</tt><a class="headerlink" href="#oauth.signature_method.base.OAuthSignatureMethod.signature" title="Permalink to this definition">¶</a></dt>
+<dd>The core <em>oauth_signature</em> generating logic.</dd></dl>
+
+<dl class="method">
+<dt id="oauth.signature_method.base.OAuthSignatureMethod.validate_signature">
+<!--[oauth.signature_method.base.OAuthSignatureMethod.validate_signature]--><tt class="descname">validate_signature</tt><big>(</big><em>signature</em><big>)</big><a class="headerlink" href="#oauth.signature_method.base.OAuthSignatureMethod.validate_signature" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks if the given signature is valid. Default behaviour is to
+generate a new signature and compare it to the given one.</p>
+<p>Arguments:</p>
+<blockquote>
+<dl class="docutils">
+<dt><cite>signature</cite></dt>
+<dd>The signature to validate.</dd>
+</dl>
+</blockquote>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="oauth.signature_method.hmac_sha1.OAuthSignatureMethod_HMAC_SHA1">
+<!--[oauth.signature_method.hmac_sha1.OAuthSignatureMethod_HMAC_SHA1]-->class <tt class="descclassname">oauth.signature_method.hmac_sha1.</tt><tt class="descname">OAuthSignatureMethod_HMAC_SHA1</tt><big>(</big><em>request</em>, <em>consumer</em>, <em>token</em><big>)</big><a class="headerlink" href="#oauth.signature_method.hmac_sha1.OAuthSignatureMethod_HMAC_SHA1" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implements the HMAC-SHA1 signature logic.</p>
+<p><a class="reference external" href="http://oauth.net/core/1.0/#rfc.section.9.2">http://oauth.net/core/1.0/#rfc.section.9.2</a></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="oauth.signature_method.rsa_sha1.OAuthSignatureMethod_RSA_SHA1">
+<!--[oauth.signature_method.rsa_sha1.OAuthSignatureMethod_RSA_SHA1]-->class <tt class="descclassname">oauth.signature_method.rsa_sha1.</tt><tt class="descname">OAuthSignatureMethod_RSA_SHA1</tt><big>(</big><em>request</em>, <em>consumer</em>, <em>token</em><big>)</big><a class="headerlink" href="#oauth.signature_method.rsa_sha1.OAuthSignatureMethod_RSA_SHA1" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implements the RSA-SHA1 signature logic.</p>
+<p><a class="reference external" href="http://oauth.net/core/1.0/#rfc.section.9.3">http://oauth.net/core/1.0/#rfc.section.9.3</a></p>
+<p>This is not a concrete implementation. An implementation needs to provide a
+public_cert and a private_cert.</p>
+<dl class="attribute">
+<dt id="oauth.signature_method.rsa_sha1.OAuthSignatureMethod_RSA_SHA1.private_cert">
+<!--[oauth.signature_method.rsa_sha1.OAuthSignatureMethod_RSA_SHA1.private_cert]--><tt class="descname">private_cert</tt><a class="headerlink" href="#oauth.signature_method.rsa_sha1.OAuthSignatureMethod_RSA_SHA1.private_cert" title="Permalink to this definition">¶</a></dt>
+<dd><p>The private certificate used for signing requests.</p>
+<p><em>An implementation needs to provide this.</em></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="oauth.signature_method.rsa_sha1.OAuthSignatureMethod_RSA_SHA1.public_cert">
+<!--[oauth.signature_method.rsa_sha1.OAuthSignatureMethod_RSA_SHA1.public_cert]--><tt class="descname">public_cert</tt><a class="headerlink" href="#oauth.signature_method.rsa_sha1.OAuthSignatureMethod_RSA_SHA1.public_cert" title="Permalink to this definition">¶</a></dt>
+<dd><p>The public certificate used for validating signatures.</p>
+<p><em>An implementation needs to provide this.</em></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="oauth.signature_method.plaintext.OAuthSignatureMethod_PLAINTEXT">
+<!--[oauth.signature_method.plaintext.OAuthSignatureMethod_PLAINTEXT]-->class <tt class="descclassname">oauth.signature_method.plaintext.</tt><tt class="descname">OAuthSignatureMethod_PLAINTEXT</tt><big>(</big><em>request</em>, <em>consumer</em>, <em>token</em><big>)</big><a class="headerlink" href="#oauth.signature_method.plaintext.OAuthSignatureMethod_PLAINTEXT" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implements the PLAINTEXT signature logic.</p>
+<p><a class="reference external" href="http://oauth.net/core/1.0/#rfc.section.9.4">http://oauth.net/core/1.0/#rfc.section.9.4</a></p>
+</dd></dl>
+
+</div>
+<div class="section" id="utility-functions">
+<h2>Utility Functions<a class="headerlink" href="#utility-functions" title="Permalink to this headline">¶</a></h2>
+<p>Helper functions that deal with query strings &amp; OAuth compliant parameter
+escaping.</p>
+<dl class="function">
+<dt id="oauth.escape">
+<!--[oauth.escape]--><tt class="descclassname">oauth.</tt><tt class="descname">escape</tt><big>(</big><em>value</em><big>)</big><a class="headerlink" href="#oauth.escape" title="Permalink to this definition">¶</a></dt>
+<dd><p>Escape the string according to:</p>
+<p><a class="reference external" href="http://oauth.net/core/1.0/#encoding_parameters">http://oauth.net/core/1.0/#encoding_parameters</a></p>
+<p>Arguments:</p>
+<blockquote>
+<dl class="docutils">
+<dt><cite>value</cite></dt>
+<dd>The string to escape.</dd>
+</dl>
+</blockquote>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">oauth</span><span class="o">.</span><span class="n">escape</span><span class="p">(</span><span class="s">&#39;a b &amp; c&#39;</span><span class="p">)</span>
+<span class="go">&#39;a%20b%20%26%20c&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">oauth</span><span class="o">.</span><span class="n">escape</span><span class="p">(</span><span class="s">&#39;abc123-._~&#39;</span><span class="p">)</span>
+<span class="go">&#39;abc123-._~&#39;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="oauth.parse_qs">
+<!--[oauth.parse_qs]--><tt class="descclassname">oauth.</tt><tt class="descname">parse_qs</tt><big>(</big><em>query</em><big>)</big><a class="headerlink" href="#oauth.parse_qs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parse a query string into a dict. Values my be strings or arrays.</p>
+<p>Arguments:</p>
+<blockquote>
+<dl class="docutils">
+<dt><cite>query</cite></dt>
+<dd>The query string or form encoded body to parse.</dd>
+</dl>
+</blockquote>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">oauth</span><span class="o">.</span><span class="n">parse_qs</span><span class="p">(</span><span class="s">&#39;a=1&amp;b=</span><span class="si">%20c</span><span class="s">+d&#39;</span><span class="p">)</span>
+<span class="go">{&#39;a&#39;: &#39;1&#39;, &#39;b&#39;: &#39; c d&#39;}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">oauth</span><span class="o">.</span><span class="n">parse_qs</span><span class="p">(</span><span class="s">&#39;a=2&amp;a=1&#39;</span><span class="p">)</span>
+<span class="go">{&#39;a&#39;: [&#39;2&#39;, &#39;1&#39;]}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="oauth.compose_qs">
+<!--[oauth.compose_qs]--><tt class="descclassname">oauth.</tt><tt class="descname">compose_qs</tt><big>(</big><em>params</em>, <em>sort=False</em><big>)</big><a class="headerlink" href="#oauth.compose_qs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compose a single string using OAuth specified escaping using
+<a class="reference internal" href="#oauth.escape">oauth.escape</a> for keys and values.</p>
+<p>Arguments:</p>
+<blockquote>
+<dl class="docutils">
+<dt><cite>params</cite></dt>
+<dd>The dict of parameters to encode into a query string.</dd>
+<dt><cite>sort</cite></dt>
+<dd>Boolean indicating if the key/values should be sorted.</dd>
+</dl>
+</blockquote>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">oauth</span><span class="o">.</span><span class="n">compose_qs</span><span class="p">({</span><span class="s">&#39;a&#39;</span><span class="p">:</span> <span class="s">&#39;1&#39;</span><span class="p">,</span> <span class="s">&#39;b&#39;</span><span class="p">:</span> <span class="s">&#39; c d&#39;</span><span class="p">})</span>
+<span class="go">&#39;a=1&amp;b=%20c%20d&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">oauth</span><span class="o">.</span><span class="n">compose_qs</span><span class="p">({</span><span class="s">&#39;a&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;2&#39;</span><span class="p">,</span> <span class="s">&#39;1&#39;</span><span class="p">]})</span>
+<span class="go">&#39;a=2&amp;a=1&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">oauth</span><span class="o">.</span><span class="n">compose_qs</span><span class="p">({</span><span class="s">&#39;a&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s">&#39;2&#39;</span><span class="p">,</span> <span class="s">&#39;1&#39;</span><span class="p">,</span> <span class="s">&#39;3&#39;</span><span class="p">]},</span> <span class="n">sort</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="go">&#39;a=1&amp;a=2&amp;a=3&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">oauth</span><span class="o">.</span><span class="n">compose_qs</span><span class="p">({</span><span class="s">&#39;a&#39;</span><span class="p">:</span> <span class="s">&#39;1&#39;</span><span class="p">,</span> <span class="s">&#39;b&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s">&#39;c&#39;</span><span class="p">:</span> <span class="mf">2</span><span class="p">,</span> <span class="s">&#39;d&#39;</span><span class="p">:</span> <span class="mf">3</span><span class="p">}},</span> <span class="n">sort</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="go">&#39;a=1&amp;b%5Bc%5D=2&amp;b%5Bd%5D=3&#39;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="error">
+<h2>Error<a class="headerlink" href="#error" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="oauth.OAuthError">
+<!--[oauth.OAuthError]-->class <tt class="descclassname">oauth.</tt><tt class="descname">OAuthError</tt><big>(</big><em>message</em>, <em>http_code=400</em><big>)</big><a class="headerlink" href="#oauth.OAuthError" title="Permalink to this definition">¶</a></dt>
+<dd>Generic OAuthError for all error cases.</dd></dl>
+
+</div>
+</div>
 
 
-    <h2>Download</h2>
-    <p>
-      You can download this project in either
-      <a href="http://github.com/nshah/python-oauth/zipball/master">zip</a> or
-      <a href="http://github.com/nshah/python-oauth/tarball/master">tar</a> formats.
-    </p>
-    <p>You can also clone the project with <a href="http://git-scm.com">Git</a>
-      by running:
-      <pre>$ git clone git://github.com/nshah/python-oauth</pre>
-    </p>
-      
-    <div class="footer">
-      get the source code on GitHub : <a href="http://github.com/nshah/python-oauth">nshah/python-oauth</a>
-    </div>
-    
-  </div>
-
-  
-</body>
+        </div>
+    </body>
 </html>
