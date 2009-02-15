@@ -25,7 +25,7 @@ class OAuthSignatureMethod(object):
 
     """
 
-    def __init__(self, request, consumer, token):
+    def __init__(self, request, consumer={}, token={}):
         """
         Initialize an instance to handle a request.
 
@@ -98,6 +98,6 @@ class OAuthSignatureMethod(object):
 
         return '&'.join((
             escape(self.request.http_method),
-            escape(self.request.http_url),
+            escape(self.request.url),
             escape(self.request.normalized_request_params),
         ))

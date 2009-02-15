@@ -2,6 +2,7 @@
 import cgi
 import collections
 import copy
+import logging
 import random
 import time
 import urllib
@@ -251,7 +252,7 @@ class OAuthRequest(object):
             if self.params['oauth_signature_method'] != sig.name:
                 raise OAuthError('Unexpected oauth_signature_method. Was expecting %s.' % sig.name)
 
-            if sig.validate_signature(self.params['oauth_signature']):
+            if not sig.validate_signature(self.params['oauth_signature']):
                 raise OAuthError('Invalid signature.')
         except KeyError:
             raise OAuthError('Missing required parameter')
