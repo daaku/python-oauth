@@ -252,8 +252,7 @@ class OAuthRequest(object):
             if self.params['oauth_signature_method'] != sig.name:
                 raise OAuthError('Unexpected oauth_signature_method. Was expecting %s.' % sig.name)
 
-            if not sig.validate_signature(self.params['oauth_signature']):
-                raise OAuthError('Invalid signature.')
+            sig.validate_signature(self.params['oauth_signature'])
         except KeyError:
             raise OAuthError('Missing required parameter')
 

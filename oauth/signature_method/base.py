@@ -1,5 +1,5 @@
 # coding: utf-8
-from oauth import escape
+from oauth import escape, OAuthError
 
 
 class OAuthSignatureMethod(object):
@@ -59,7 +59,8 @@ class OAuthSignatureMethod(object):
     def validate_signature(self, signature):
         """
         Checks if the given signature is valid. Default behaviour is to
-        generate a new signature and compare it to the given one.
+        generate a new signature and compare it to the given one. Raises an
+        OAuthError if the signatures do not match.
 
         Arguments:
 
@@ -67,7 +68,8 @@ class OAuthSignatureMethod(object):
                 The signature to validate.
 
         """
-        return self.signature == signature
+        if self.signature != signature:
+            raise OAuthError('Invalid Signature')
 
     @property
     def base_secrets(self):

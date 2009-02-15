@@ -1,5 +1,5 @@
 # coding: utf-8
-from oauth import escape
+from oauth import escape, OAuthError
 from oauth.signature_method.base import OAuthSignatureMethod
 from tlslite.utils import keyfactory
 import base64
@@ -46,4 +46,5 @@ class OAuthSignatureMethod_RSA_SHA1(OAuthSignatureMethod):
     def validate_signature(self, signature):
         decoded_sig = base64.b64decode(signature)
         publickey = keyfactory.parsePEMKey(self.public_cert, public=True)
-        return publickey.hashAndVerify(decoded_sig, self.base_string)
+        if not publickey.hashAndVerify(decoded_sig, self.base_string):
+            raise OAuthError('Invalid Signature')
