@@ -18,9 +18,7 @@ class OAuthError(RuntimeError):
     Generic OAuthError for all error cases.
 
     """
-    def __init__(self, message, http_code=400):
-        self.message = message
-        self.http_code = http_code
+    pass
 
 def escape(value):
     """
@@ -177,7 +175,7 @@ class OAuthRequest(object):
                 try:
                     header_params = OAuthRequest._parse_auth_header(auth_header)
                     params.update(header_params)
-                except:
+                except ValueError:
                     raise OAuthError('Unable to parse OAuth parameters from Authorization header.')
 
         # URL parameters
@@ -390,8 +388,8 @@ class OAuthRequest(object):
         params = {}
         parts = header.split(',')
         for param in parts:
-            if param == 'realm':
-                continue
             key, value = param.strip().split('=', 1)
+            if key == 'realm':
+                continue
             params[key] = urllib.unquote(value.strip('"'))
         return params
