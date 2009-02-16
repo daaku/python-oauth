@@ -108,6 +108,9 @@ The latest code can be downloaded as a
 <a class="reference external" href="http://github.com/nshah/python-oauth/zipball/master">zip file</a> or a
 <a class="reference external" href="http://github.com/nshah/python-oauth/tarball/master">tarball</a>.</p>
 <p>Requires Python 2.5 or newer.</p>
+<p>Can be installed using <a class="reference external" href="http://pip.openplans.org/">pip</a>:</p>
+<div class="highlight-python"><pre>pip install -e 'git+git://github.com/nshah/python-oauth.git#egg=oauth'</pre>
+</div>
 <div class="section" id="oauthrequest">
 <h2>OAuthRequest<a class="headerlink" href="#oauthrequest" title="Permalink to this headline">¶</a></h2>
 <p>This is the primary interface into the library.</p>
@@ -282,7 +285,7 @@ and use your class as the signature_method for signing and validating
 requests.</p>
 <dl class="class">
 <dt id="oauth.signature_method.base.OAuthSignatureMethod">
-<!--[oauth.signature_method.base.OAuthSignatureMethod]-->class <tt class="descclassname">oauth.signature_method.base.</tt><tt class="descname">OAuthSignatureMethod</tt><big>(</big><em>request</em>, <em>consumer</em>, <em>token</em><big>)</big><a class="headerlink" href="#oauth.signature_method.base.OAuthSignatureMethod" title="Permalink to this definition">¶</a></dt>
+<!--[oauth.signature_method.base.OAuthSignatureMethod]-->class <tt class="descclassname">oauth.signature_method.base.</tt><tt class="descname">OAuthSignatureMethod</tt><big>(</big><em>request</em>, <em>consumer={}</em>, <em>token={}</em><big>)</big><a class="headerlink" href="#oauth.signature_method.base.OAuthSignatureMethod" title="Permalink to this definition">¶</a></dt>
 <dd><p>The base signature method class. An implementation needs to provide a name
 and a signature. The default validate_signature compares a newly generated
 signature.</p>
@@ -329,7 +332,8 @@ the <em>oauth_signature_method</em> value.</dd></dl>
 <dt id="oauth.signature_method.base.OAuthSignatureMethod.validate_signature">
 <!--[oauth.signature_method.base.OAuthSignatureMethod.validate_signature]--><tt class="descname">validate_signature</tt><big>(</big><em>signature</em><big>)</big><a class="headerlink" href="#oauth.signature_method.base.OAuthSignatureMethod.validate_signature" title="Permalink to this definition">¶</a></dt>
 <dd><p>Checks if the given signature is valid. Default behaviour is to
-generate a new signature and compare it to the given one.</p>
+generate a new signature and compare it to the given one. Raises an
+OAuthError if the signatures do not match.</p>
 <p>Arguments:</p>
 <blockquote>
 <dl class="docutils">
@@ -343,14 +347,14 @@ generate a new signature and compare it to the given one.</p>
 
 <dl class="class">
 <dt id="oauth.signature_method.hmac_sha1.OAuthSignatureMethod_HMAC_SHA1">
-<!--[oauth.signature_method.hmac_sha1.OAuthSignatureMethod_HMAC_SHA1]-->class <tt class="descclassname">oauth.signature_method.hmac_sha1.</tt><tt class="descname">OAuthSignatureMethod_HMAC_SHA1</tt><big>(</big><em>request</em>, <em>consumer</em>, <em>token</em><big>)</big><a class="headerlink" href="#oauth.signature_method.hmac_sha1.OAuthSignatureMethod_HMAC_SHA1" title="Permalink to this definition">¶</a></dt>
+<!--[oauth.signature_method.hmac_sha1.OAuthSignatureMethod_HMAC_SHA1]-->class <tt class="descclassname">oauth.signature_method.hmac_sha1.</tt><tt class="descname">OAuthSignatureMethod_HMAC_SHA1</tt><big>(</big><em>request</em>, <em>consumer={}</em>, <em>token={}</em><big>)</big><a class="headerlink" href="#oauth.signature_method.hmac_sha1.OAuthSignatureMethod_HMAC_SHA1" title="Permalink to this definition">¶</a></dt>
 <dd><p>Implements the HMAC-SHA1 signature logic.</p>
 <p><a class="reference external" href="http://oauth.net/core/1.0/#rfc.section.9.2">http://oauth.net/core/1.0/#rfc.section.9.2</a></p>
 </dd></dl>
 
 <dl class="class">
 <dt id="oauth.signature_method.rsa_sha1.OAuthSignatureMethod_RSA_SHA1">
-<!--[oauth.signature_method.rsa_sha1.OAuthSignatureMethod_RSA_SHA1]-->class <tt class="descclassname">oauth.signature_method.rsa_sha1.</tt><tt class="descname">OAuthSignatureMethod_RSA_SHA1</tt><big>(</big><em>request</em>, <em>consumer</em>, <em>token</em><big>)</big><a class="headerlink" href="#oauth.signature_method.rsa_sha1.OAuthSignatureMethod_RSA_SHA1" title="Permalink to this definition">¶</a></dt>
+<!--[oauth.signature_method.rsa_sha1.OAuthSignatureMethod_RSA_SHA1]-->class <tt class="descclassname">oauth.signature_method.rsa_sha1.</tt><tt class="descname">OAuthSignatureMethod_RSA_SHA1</tt><big>(</big><em>request</em>, <em>consumer={}</em>, <em>token={}</em><big>)</big><a class="headerlink" href="#oauth.signature_method.rsa_sha1.OAuthSignatureMethod_RSA_SHA1" title="Permalink to this definition">¶</a></dt>
 <dd><p>Implements the RSA-SHA1 signature logic.</p>
 <p><a class="reference external" href="http://oauth.net/core/1.0/#rfc.section.9.3">http://oauth.net/core/1.0/#rfc.section.9.3</a></p>
 <p>This is not a concrete implementation. An implementation needs to provide a
@@ -373,7 +377,7 @@ public_cert and a private_cert.</p>
 
 <dl class="class">
 <dt id="oauth.signature_method.plaintext.OAuthSignatureMethod_PLAINTEXT">
-<!--[oauth.signature_method.plaintext.OAuthSignatureMethod_PLAINTEXT]-->class <tt class="descclassname">oauth.signature_method.plaintext.</tt><tt class="descname">OAuthSignatureMethod_PLAINTEXT</tt><big>(</big><em>request</em>, <em>consumer</em>, <em>token</em><big>)</big><a class="headerlink" href="#oauth.signature_method.plaintext.OAuthSignatureMethod_PLAINTEXT" title="Permalink to this definition">¶</a></dt>
+<!--[oauth.signature_method.plaintext.OAuthSignatureMethod_PLAINTEXT]-->class <tt class="descclassname">oauth.signature_method.plaintext.</tt><tt class="descname">OAuthSignatureMethod_PLAINTEXT</tt><big>(</big><em>request</em>, <em>consumer={}</em>, <em>token={}</em><big>)</big><a class="headerlink" href="#oauth.signature_method.plaintext.OAuthSignatureMethod_PLAINTEXT" title="Permalink to this definition">¶</a></dt>
 <dd><p>Implements the PLAINTEXT signature logic.</p>
 <p><a class="reference external" href="http://oauth.net/core/1.0/#rfc.section.9.4">http://oauth.net/core/1.0/#rfc.section.9.4</a></p>
 </dd></dl>
