@@ -14,6 +14,10 @@ The latest code can be downloaded as a
 
 Requires Python 2.5 or newer.
 
+Can be installed using `pip <http://pip.openplans.org/>`_::
+
+    pip install -e 'git+git://github.com/nshah/python-oauth.git#egg=oauth'
+
 .. toctree::
 
 ************
