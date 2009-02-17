@@ -1,0 +1,2 @@
+-e git://github.com/nshah/python-urlencoding.git#egg=urlencoding
+-e git://github.com/nshah/python-oauth.git#egg=oauth
