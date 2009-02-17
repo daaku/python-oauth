@@ -1,3 +1,3 @@
 Generated documentation is available at http://code.daaku.org/python-oauth/.
 
-pip install -e 'git+git://github.com/nshah/python-oauth.git#egg=oauth'
+pip install -r http://code.daaku.org/python-oauth/reqs

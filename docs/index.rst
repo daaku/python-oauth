@@ -16,7 +16,7 @@ Requires Python 2.5 or newer.
 
 Can be installed using `pip <http://pip.openplans.org/>`_::
 
-    pip install -e 'git+git://github.com/nshah/python-oauth.git#egg=oauth'
+    pip install -r http://code.daaku.org/python-oauth/reqs
 
 .. toctree::
 
@@ -52,17 +52,6 @@ requests.
 .. autoclass:: oauth.signature_method.rsa_sha1.OAuthSignatureMethod_RSA_SHA1
     :members:
 .. autoclass:: oauth.signature_method.plaintext.OAuthSignatureMethod_PLAINTEXT
-
-*****************
-Utility Functions
-*****************
-
-Helper functions that deal with query strings & OAuth compliant parameter
-escaping.
-
-.. autofunction:: oauth.escape
-.. autofunction:: oauth.parse_qs
-.. autofunction:: oauth.compose_qs(params, sort=False)
 
 *****
 Error

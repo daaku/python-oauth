@@ -17,5 +17,8 @@ setup(
     ],
     include_package_data=True,
     zip_safe=False,
-    install_requires=['setuptools', 'setuptools_git'],
+    install_requires=['setuptools', 'setuptools_git', 'urlencoding'],
+    extras_require = {
+        'RSA': ['tlslite'],
+    },
 )
