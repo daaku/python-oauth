@@ -12,7 +12,7 @@ The latest code can be downloaded as a
 `zip file <http://github.com/nshah/python-oauth/zipball/master>`_ or a
 `tarball <http://github.com/nshah/python-oauth/tarball/master>`_.
 
-Requires Python 2.5 or newer and `python-urlencoding
+Requires Python 2.6 or newer and `python-urlencoding
 <http://code.daaku.org/python-urlencoding/>`_.
 
 Can be installed using `pip <http://pip.openplans.org/>`_::
